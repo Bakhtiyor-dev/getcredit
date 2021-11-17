@@ -16,7 +16,10 @@ class AssesmentController extends Controller
         
         $subject = Subject::find(request()->subject_id);
         
-        $tests = $subject->tests;
+        $tests = $subject->tests()
+                            ->inRandomOrder()
+                            ->take(20)
+                            ->get();
        
         return view('assesment.index',compact('tests','subject'));
     }
