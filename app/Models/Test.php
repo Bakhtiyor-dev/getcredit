@@ -13,6 +13,9 @@ class Test extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'answers' => 'array'
+    ];
     protected $appends = ['resource_url'];
     
 
