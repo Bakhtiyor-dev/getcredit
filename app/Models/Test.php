@@ -15,15 +15,24 @@ class Test extends Model
 
     protected $appends = ['resource_url'];
     
+
+    protected static function booted(){
+       
+        static::retrieved(function($test){
+            return $test->randomizeAnswers();
+        });
+    
+    }
+    
     protected $dates = [
         'created_at',
         'updated_at',
     ];
 
-    public function getAnswersAttribute($answers){
-        $array = json_decode($answers);
-        shuffle($array);
-        return $array;
+    protected function randomizeAnswers(){
+        $answers = json_decode($this->answers);
+        shuffle($answers);
+        $this->attributes['answers'] = $answers;
     }
 
     public function check($completedTest){

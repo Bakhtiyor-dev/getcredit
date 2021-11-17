@@ -14,20 +14,22 @@ class AssesmentController extends Controller
             'subject_id'=>'required|integer',
         ]);
         
-        $subject = Subject::find(request()->subject_id);
+        $subject = Subject::find($request->subject_id);
         
         $tests = $subject->tests()
                             ->inRandomOrder()
-                            ->take(20)
+                            ->take(20)       
                             ->get();
-       
+
+        session()->put('tests',$tests);
+
         return view('assesment.index',compact('tests','subject'));
     }
 
     public function check(Request $request){
-
-        $tests = Test::findMany(json_decode($request->tests));  
         
+        $tests = session()->pull('tests');
+    
         foreach($tests as $test){
             $test->check($request->except(['_token','tests']));    
         }
