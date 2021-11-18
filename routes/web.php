@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Subject;
+use App\Models\Test;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',function(){
-    $subjects = Subject::where('status',1)->get();
+    
+    $subjects = Subject::available()->get();
+
     return view('index',compact('subjects'));
 });
 
+Route::get('search','SearchController@search')->name('search');
+
 Route::get('/contribute','ContributeController@index')->name('contribute');
+
 Route::post('/contribute','ContributeController@storeFile')->name('contribute.store');
 
 Route::get('/assesment',function(){
@@ -111,7 +117,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
 
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
-    Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
+    Route::prefix('admin')->namespace('\App\Http\Controllers\Admin')->name('admin/')->group(static function() {
         Route::prefix('files')->name('files/')->group(static function() {
             Route::get('/',                                             'FilesController@index')->name('index');
             Route::get('/create',                                       'FilesController@create')->name('create');

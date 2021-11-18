@@ -12,7 +12,7 @@ class ContributeController extends Controller
 {
     public function index(){
         return view('add',[
-            'subjects' => Subject::where('status',1)->get()
+            'subjects' => Subject::available()->get()
         ]);
     }
 

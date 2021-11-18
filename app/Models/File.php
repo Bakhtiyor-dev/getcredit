@@ -20,12 +20,25 @@ class File extends Model
     
     ];
     
-    protected $appends = ['resource_url'];
+    protected $appends = ['resource_url','subject_title'];
 
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute()
     {
         return url('/admin/files/'.$this->getKey());
+    }
+
+    public function getUrlAttribute($url){
+        return '/storage/'.$url;
+    }
+
+    public function getSubjectTitleAttribute(){
+        dd($this->subject);
+        return $this->subject->title;
+    }
+
+    public function subject(){
+        return $this->belongsTo(Subject::class);
     }
 }

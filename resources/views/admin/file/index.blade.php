@@ -77,8 +77,13 @@
                                         </td>
 
                                     <td>@{{ item.id }}</td>
-                                        <td>@{{ item.url }}</td>
-                                        <td>@{{ item.subject_id }}</td>
+                                        <td>
+                                            <a :href="item.url" target="_blank">
+                                                @{{ item.url }}
+                                            </a>
+
+                                            </td>
+                                        <td>@{{ item.subject_title }}</td>
                                         <td>@{{ item.imported }}</td>
                                         
                                         <td>

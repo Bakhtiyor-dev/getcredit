@@ -18,3 +18,12 @@ label{
     top: 50px;
     z-index: 100;
 }
+
+.link{
+    text-decoration: none;
+    color:#ffff;
+}
+
+mark{
+    background-color: yellow;
+}

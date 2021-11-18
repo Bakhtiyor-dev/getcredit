@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
-use App\Models\Test;
 use Illuminate\Http\Request;
 
 class AssesmentController extends Controller
@@ -21,6 +20,9 @@ class AssesmentController extends Controller
                             ->take(20)       
                             ->get();
 
+        if($tests->isEmpty())
+            abort(404);
+        
         session()->put('tests',$tests);
 
         return view('assesment.index',compact('tests','subject'));
