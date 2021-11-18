@@ -16,13 +16,13 @@
       <form action="{{route('check')}}" id="form" method="POST">
         @csrf
 
-        <input type="hidden" name="tests" value="{{$tests->pluck('id')}}"> 
+        <input type="hidden" name="tests" value="{{$tests}}"> 
         
         @foreach($tests as $test)  
             @include('partials.question-card',compact('test'))      
         @endforeach
 
-        <button type="submit" class="btn btn-primary mt-3 float-end submit" >Завершить</button>
+        <button type="submit" class="btn btn-primary mt-3 float-end submit">Завершить</button>
 
       </form>
     </div>

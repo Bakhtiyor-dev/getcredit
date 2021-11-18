@@ -1,13 +1,11 @@
 require('./bootstrap');
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Vuex from 'vuex'
 
-Vue.use(Vuex)
-Vue.use(VueRouter);
+window.Vue = require('vue').default;
 
-Vue.component('tests', require('./components/Tests.vue').default);
+import algoliasearch from 'algoliasearch/lite';
+import InstantSearch from 'vue-instantsearch';
 
-const app = new Vue({
-    el: '#app',
-});
+window.algoliasearch = algoliasearch;
+Vue.use(InstantSearch);
+

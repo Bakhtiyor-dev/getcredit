@@ -9,10 +9,31 @@ class Subject extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'status'
+    ];
+    
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    
+    ];
+    
+    protected $appends = ['resource_url'];
+
+    /* ************************ ACCESSOR ************************* */
+
+    public function getResourceUrlAttribute()
+    {
+        return url('/admin/subjects/'.$this->getKey());
+    }
 
     public function tests(){
         return $this->hasMany(Test::class);
     }
-    
+
+    public function scopeAvailable($query){
+        return $query->where('status',1);
+    }
 }   

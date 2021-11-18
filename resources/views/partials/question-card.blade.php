@@ -6,7 +6,7 @@
     
     <div class="card-body p-0">
         <div class="list-group border-0 rounded-0">
-    
+
                 @foreach($test->answers as $answer)
                     @isset($result)
                         @include('partials.option-result',compact('answer'))

@@ -67,5 +67,23 @@ return [
         ],
     ],
 
+    'file' => [
+        'title' => 'Files',
+
+        'actions' => [
+            'index' => 'Files',
+            'create' => 'New File',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => 'ID',
+            'url' => 'Url',
+            'subject_id' => 'Subject',
+            'imported' => 'Imported',
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];
