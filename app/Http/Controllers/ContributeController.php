@@ -24,7 +24,7 @@ class ContributeController extends Controller
         ]);
         
         $recaptchaResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify',[
-            'secret'   => '6LcMsD4dAAAAAMoJ-PttFked4-aRtC89lU8n7sav',
+            'secret'   => env('GOOGLE_RECAPTCHA_SECRET_KEY'),
             'response' => $request->input('g-recaptcha-response')
         ]);
 
