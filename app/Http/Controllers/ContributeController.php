@@ -10,14 +10,26 @@ use Illuminate\Support\Facades\Http;
 
 class ContributeController extends Controller
 {
-    public function index(){
+    /**
+     * Display contribute page
+     *
+     * @return view
+     */
+    public function index()
+    {
         return view('add',[
             'subjects' => Subject::available()->get()
         ]);
     }
 
-    public function storeFile(Request $request){
-        
+    /**
+     * Handle the request and save file if passes validation and recaptcha
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function storeFile(Request $request)
+    {
         $request->validate([
             'file'=>'required|mimes:txt',
             'subject'=>'required|integer'
@@ -28,8 +40,7 @@ class ContributeController extends Controller
             'response' => $request->input('g-recaptcha-response')
         ]);
 
-        if($recaptchaResponse['success']){
-            
+        if($recaptchaResponse['success']){    
             \App\Models\File::create([
                 'url' => $request->file->store('/files'),
                 'subject_id'=> $request->subject
@@ -38,22 +49,8 @@ class ContributeController extends Controller
             return back()->with('success','Спасибо за поддержку! Ваш файл отправлен на модерацию.');
         }
 
-        return back()->withErrors($recaptchaResponse['error-codes']);
-                
+        return back()->withErrors($recaptchaResponse['error-codes']);           
     }
 
-    public function importTests(){
-
-        $tests = (new TestsParser(File::get('tests.txt')))->parse();
-
-        try {
-            foreach($tests as $test){
-                $test->subject_id = 2;
-                $test->status = true;
-                $test->save();
-            }
-        } catch (\Throwable $th) {
-            echo $th->errorInfo[2];
-        } 
-    }
+   
 }

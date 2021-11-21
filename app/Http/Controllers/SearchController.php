@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function search(Request $request){
-
+    /**
+     * Handle the search query with  Algolia
+     *
+     * @param Request $request
+     * @return view
+     */
+    public function search(Request $request)
+    {
         $request->validate([
             'query' => 'required'
         ]);
