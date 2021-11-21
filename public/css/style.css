@@ -1,0 +1,29 @@
+.target{
+    background-color:aqua;
+    transition: ease-in 1s;
+}
+.question-card{
+    transition: ease-out 1s;
+}
+.list-group-item-action.disabled{
+    color: #000;
+}
+
+label{
+    cursor: pointer;
+}
+.navigator{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 50px;
+    z-index: 100;
+}
+
+.link{
+    text-decoration: none;
+    color:#ffff;
+}
+
+mark{
+    background-color: yellow;
+}
