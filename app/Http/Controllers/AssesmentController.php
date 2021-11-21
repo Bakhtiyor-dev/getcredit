@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 
 class AssesmentController extends Controller
 {
-    public function index(Request $request){
-        
+    /**
+     * Start assesment
+     *
+     * @param Request $request
+     * @return view
+     */
+    public function index(Request $request)
+    {    
         $request->validate([
             'subject_id'=>'required|integer',
         ]);
@@ -28,8 +34,15 @@ class AssesmentController extends Controller
         return view('assesment.index',compact('tests','subject'));
     }
 
-    public function check(Request $request){
-        
+
+    /**
+     * Check the completed test and display the result
+     *
+     * @param Request $request
+     * @return view
+     */
+    public function check(Request $request)
+    {    
         $tests = session()->pull('tests');
     
         foreach($tests as $test){

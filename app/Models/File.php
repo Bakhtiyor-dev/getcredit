@@ -29,12 +29,8 @@ class File extends Model
         return url('/admin/files/'.$this->getKey());
     }
 
-    public function getUrlAttribute($url){
-        return '/storage/'.$url;
-    }
 
     public function getSubjectTitleAttribute(){
-        dd($this->subject);
         return $this->subject->title;
     }
 

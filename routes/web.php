@@ -15,12 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',function(){
-    
-    $subjects = Subject::available()->get();
-
-    return view('index',compact('subjects'));
-});
+Route::get('/','IndexController@index');
 
 Route::get('search','SearchController@search')->name('search');
 
@@ -123,8 +118,11 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
             Route::get('/create',                                       'FilesController@create')->name('create');
             Route::post('/',                                            'FilesController@store')->name('store');
             Route::get('/{file}/edit',                                  'FilesController@edit')->name('edit');
+            Route::get('/{file}/editFile',                              'FilesController@editFile')->name('edit.file');
+            Route::get('/{file}/import',                                'FilesController@import')->name('import');
             Route::post('/bulk-destroy',                                'FilesController@bulkDestroy')->name('bulk-destroy');
             Route::post('/{file}',                                      'FilesController@update')->name('update');
+            Route::post('/{file}/updateFile',                           'FilesController@updateFile')->name('update.file');            
             Route::delete('/{file}',                                    'FilesController@destroy')->name('destroy');
         });
     });

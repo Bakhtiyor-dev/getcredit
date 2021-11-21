@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\File\BulkDestroyFile;
 use App\Http\Requests\Admin\File\DestroyFile;
@@ -19,6 +20,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use App\Parsers\TestsParser;
+use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
 {
@@ -184,5 +187,57 @@ class FilesController extends Controller
         });
 
         return response(['message' => trans('brackets/admin-ui::admin.operation.succeeded')]);
+    }
+
+
+
+     /**
+     * Import Tests from txt file
+     *
+     * @return void
+     */
+    public function import(File $file)
+    {
+
+        if(Storage::exists($file->url)){
+            
+            $tests = (new TestsParser(Storage::get($file->url)))->parse();
+
+            try {
+                
+                foreach($tests as $test){
+                    $test->subject_id = $file->subject_id;
+                    $test->status = true;
+                    $test->save();
+                }
+               
+                return back()->with('success','Успешно импортирован!');
+
+            } catch (\Exception $e) {
+                return back()->withErrors($e->errorInfo[2]);
+            } 
+        }
+
+        return back()->withErrors('Файл не существует');
+        
+    }
+
+    public function editFile(File $file)
+    {
+        $content = Storage::get($file->url);
+
+        return view('admin.file.editFile', [
+            'file' => $file,
+            'content'=>$content
+        ]);
+    }
+
+    public function updateFile(Request $request){
+        
+         if(Storage::put($request->url, $request->content))
+             return redirect('admin/files')->with('success','Успешно изменен!');
+
+        return back()->withErrors('Что-то пошло не так.');
+        
     }
 }

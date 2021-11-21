@@ -19,3 +19,20 @@ $(document).on('click', 'a[href^="#"]', function (event) {
     localStorage.setItem("target", hash);
 
 });
+
+var count = $('#count').text();
+
+function updateCount() {
+    $('#count').animate({
+        counter: count
+    }, {
+        duration: 2000,
+        easing: 'swing',
+        step: function(now) {
+            $(this).text(Math.ceil(now));
+        },
+        complete: updateCount
+    });
+};
+
+updateCount();

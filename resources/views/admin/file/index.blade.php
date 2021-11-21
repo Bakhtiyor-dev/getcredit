@@ -8,7 +8,7 @@
         :data="{{ $data->toJson() }}"
         :url="'{{ url('admin/files') }}'"
         inline-template>
-
+        
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -17,7 +17,19 @@
                         <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/files/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.file.actions.create') }}</a>
                     </div>
                     <div class="card-body" v-cloak>
+                        
+                        @if($errors->any())
+                            @foreach($errors->all() as $error)
+                                <div class="alert alert-danger">{{$error}}</div>
+                            @endforeach
+                        @endif
+
+                        @if(session()->has('success'))
+                            <div class="alert alert-success">{{session('success')}}</div>    
+                        @endif
+
                         <div class="card-block">
+
                             <form @submit.prevent="">
                                 <div class="row justify-content-md-between">
                                     <div class="col col-lg-7 col-xl-5 form-group">
@@ -78,8 +90,8 @@
 
                                     <td>@{{ item.id }}</td>
                                         <td>
-                                            <a :href="item.url" target="_blank">
-                                                @{{ item.url }}
+                                            <a :href="item.resource_url + '/editFile' " target="_blank">
+                                                /storage/@{{ item.url }}
                                             </a>
 
                                             </td>
@@ -88,6 +100,9 @@
                                         
                                         <td>
                                             <div class="row no-gutters">
+                                                <div class="col-auto">
+                                                    <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/import'" title="Имрорт" role="button"><i class="fa fa-download"></i></a>
+                                                </div>
                                                 <div class="col-auto">
                                                     <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
                                                 </div>
