@@ -211,6 +211,10 @@ class FilesController extends Controller
                     $test->save();
                 }
                
+                $file->update([
+                    'imported'=>true
+                ]);
+                
                 return back()->with('success','Успешно импортирован!');
 
             } catch (\Exception $e) {

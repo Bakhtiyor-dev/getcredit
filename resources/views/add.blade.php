@@ -54,7 +54,7 @@
                     <div class="mb-4">
                         <label for="subject" class="fw-bold mb-2">Предмет</label>
                         <select name="subject" id="subject" class="form-select">
-                            <option value="">Выбрать предмет</option>
+                            <option value="" class="text-muted">-- Выбрать предмет --</option>
                             @foreach($subjects as $subject)
                                 <option value="{{$subject->id}}">{{$subject->title}}</option>
                             @endforeach
