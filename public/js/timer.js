@@ -1,5 +1,5 @@
 var timer = new easytimer.Timer();
-var time = 20 * 60;
+var time = 3600;
 
 progress(time);
 timer.start({countdown: true, startValues: {seconds: time}});

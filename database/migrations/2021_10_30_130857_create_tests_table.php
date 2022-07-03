@@ -18,11 +18,11 @@ class CreateTestsTable extends Migration
             $table->text('question');
             $table->json('answers');
             $table->integer('correct_answer_id');
+            $table->unsignedBigInteger('subject_id')->nullable();
             $table->timestamps();
         });
     }
 
-    
 
     /**
      * Reverse the migrations.

@@ -73,9 +73,9 @@ class TestsParser{
             }
         }
 
-        if($correct_answer === '')
-            throw new \Exception('Invalid structure: correct answer not given on question "'.$question.'"');
-       
+//        if($correct_answer === '')
+//            throw new \Exception('Invalid structure: correct answer not given on question "'.$question.'"');
+//
         return [
             'answers' => $serialized,
             'correct_answer'=>$correct_answer

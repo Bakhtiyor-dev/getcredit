@@ -36,7 +36,7 @@ class FilesController extends Controller
     {
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(File::class)->processRequestAndGet(
-            // pass the request with params
+        // pass the request with params
             $request,
 
             // set columns to query
@@ -61,8 +61,8 @@ class FilesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @throws AuthorizationException
      * @return Factory|View
+     * @throws AuthorizationException
      */
     public function create()
     {
@@ -96,8 +96,8 @@ class FilesController extends Controller
      * Display the specified resource.
      *
      * @param File $file
-     * @throws AuthorizationException
      * @return void
+     * @throws AuthorizationException
      */
     public function show(File $file)
     {
@@ -110,8 +110,8 @@ class FilesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param File $file
-     * @throws AuthorizationException
      * @return Factory|View
+     * @throws AuthorizationException
      */
     public function edit(File $file)
     {
@@ -153,8 +153,8 @@ class FilesController extends Controller
      *
      * @param DestroyFile $request
      * @param File $file
-     * @throws Exception
      * @return ResponseFactory|RedirectResponse|Response
+     * @throws Exception
      */
     public function destroy(DestroyFile $request, File $file)
     {
@@ -171,10 +171,10 @@ class FilesController extends Controller
      * Remove the specified resources from storage.
      *
      * @param BulkDestroyFile $request
-     * @throws Exception
      * @return Response|bool
+     * @throws Exception
      */
-    public function bulkDestroy(BulkDestroyFile $request) : Response
+    public function bulkDestroy(BulkDestroyFile $request): Response
     {
         DB::transaction(static function () use ($request) {
             collect($request->data['ids'])
@@ -190,36 +190,24 @@ class FilesController extends Controller
     }
 
 
-
-     /**
-     * Import Tests from txt file
-     *
-     * @return void
-     */
     public function import(File $file)
     {
+        if (Storage::exists($file->url)) {
 
-        if(Storage::exists($file->url)){
-            
             $tests = (new TestsParser(Storage::get($file->url)))->parse();
 
-            try {
-                
-                foreach($tests as $test){
-                    $test->subject_id = $file->subject_id;
-                    $test->status = true;
-                    $test->save();
-                }
-               
-                return back()->with('success','Успешно импортирован!');
+            foreach ($tests as $test) {
+                $test->subject_id = $file->subject_id;
+                //$test->status = true;
+                $test->save();
+            }
 
-            } catch (\Exception $e) {
-                return back()->withErrors($e->errorInfo[2]);
-            } 
+            return back()->with('success', 'Успешно импортирован!');
+
         }
 
         return back()->withErrors('Файл не существует');
-        
+
     }
 
     public function editFile(File $file)
@@ -228,16 +216,16 @@ class FilesController extends Controller
 
         return view('admin.file.editFile', [
             'file' => $file,
-            'content'=>$content
+            'content' => $content
         ]);
     }
 
-    public function updateFile(Request $request){
-        
-         if(Storage::put($request->url, $request->content))
-             return redirect('admin/files')->with('success','Успешно изменен!');
+    public function updateFile(Request $request)
+    {
+        if (Storage::put($request->url, $request->content))
+            return redirect('admin/files')->with('success', 'Успешно изменен!');
 
         return back()->withErrors('Что-то пошло не так.');
-        
+
     }
 }

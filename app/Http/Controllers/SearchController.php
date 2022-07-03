@@ -19,10 +19,10 @@ class SearchController extends Controller
             'query' => 'required'
         ]);
 
-        $query = $request['query'];
+        $query = trim($request['query']);
 
-        $results = Test::search($query)->get();
-      
-        return view('search-results',compact('results','query'));
+        $results = Test::query()->where('question', 'LIKE', "%{$query}%")->get();
+
+        return view('search-results', compact('results', 'query'));
     }
 }
