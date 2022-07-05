@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Test;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\File\BulkDestroyFile;
@@ -199,7 +200,9 @@ class FilesController extends Controller
             foreach ($tests as $test) {
                 $test->subject_id = $file->subject_id;
                 //$test->status = true;
-                $test->save();
+                if (!Test::query()->where('question', $test->question)->exists()) {
+                    $test->save();
+                }
             }
 
             return back()->with('success', 'Успешно импортирован!');

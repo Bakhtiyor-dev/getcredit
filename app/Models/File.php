@@ -10,31 +10,32 @@ class File extends Model
         'url',
         'subject_id',
         'imported',
-    
+
     ];
-    
-    
+
+
     protected $dates = [
         'created_at',
         'updated_at',
-    
+
     ];
-    
-    protected $appends = ['resource_url','subject_title'];
+
+    protected $appends = ['resource_url', 'subject_title'];
 
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute()
     {
-        return url('/admin/files/'.$this->getKey());
+        return url('/admin/files/' . $this->getKey());
     }
 
-
-    public function getSubjectTitleAttribute(){
+    public function getSubjectTitleAttribute()
+    {
         return $this->subject->title;
     }
 
-    public function subject(){
+    public function subject()
+    {
         return $this->belongsTo(Subject::class);
     }
 }
