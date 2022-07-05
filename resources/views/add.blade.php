@@ -68,7 +68,7 @@
 
                         <div class="clearfix">
                             <button class="btn btn-primary mt-2 float-end"
-                                    type="button">
+                                    type="submit">
                                 Отправить на модерацию
                             </button>
                         </div>
