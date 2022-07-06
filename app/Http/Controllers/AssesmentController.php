@@ -45,6 +45,8 @@ class AssesmentController extends Controller
     {
         $tests = session()->pull('tests');
 
+        $subjectId = $tests->first()->subject_id;
+
         foreach ($tests as $test) {
             $test->check($request->except(['_token', 'tests']));
         }
@@ -55,7 +57,7 @@ class AssesmentController extends Controller
         $rating = $correct_count . '/' . $all;
         $percent = round($correct_count / $all * 100, 1);
 
-        return view('assesment.result', compact('tests', 'rating', 'percent'))
+        return view('assesment.result', compact('tests', 'rating', 'percent', 'subjectId'))
             ->with('result', 'true');
     }
 }

@@ -9,6 +9,30 @@
                     <hr>
                     <span class="text-primary">{{$percent}}%</span>
                 </h1>
+                <div class="d-flex justify-content-between">
+                    <h4>
+                        @if($percent < 60)
+                            <span class="text-danger">Не прошел :(</span>
+                        @else
+                            <span class="text-success">Прошел :)</span>
+                        @endif
+                    </h4>
+
+                    <div>
+                        <form action="{{route('assesment')}}"
+                              method="POST"
+                              class="col-lg mx-auto d-flex flex-column flex-lg-row">
+                            @csrf
+                            <input type="hidden" name="subject_id" value="{{$subjectId}}">
+                            <button type="submit" class="btn btn-outline-primary mt-3 mt-lg-0 ms-lg-3">
+                                <i class="fa fa-recycle"></i>
+                                Пересдать
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+
             </div>
         </div>
 
